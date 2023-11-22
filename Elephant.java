@@ -1,4 +1,4 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Write a description of class Elephant here.
@@ -14,15 +14,6 @@ public class Elephant extends Actor
      */
     public void act()
     {
-        GreenfootImage image = getImage();
-        int i = image.getWidth();
-        int k = image.getHeight();
-        
-        if(isTouching(null))
-        {
-            i++;
-            k++;
-        }
         if(Greenfoot.isKeyDown("a"))
         {
             move(-2);
@@ -31,6 +22,5 @@ public class Elephant extends Actor
         {
             move(2);
         }
-        image.scale(k, i);
     }
 }
