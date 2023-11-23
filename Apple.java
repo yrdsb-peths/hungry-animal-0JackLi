@@ -14,6 +14,12 @@ public class Apple extends Actor
      */
     public void act()
     {
-       setLocation(getX(), getY()+1);
+       setLocation(getX(), getY()+5);
+       if(getY() >= 399)
+       {
+           MyWorld world = (MyWorld) getWorld();
+           world.removeObj(this);
+           world.spawnApple();
+       }
     }
 }
