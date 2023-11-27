@@ -56,7 +56,7 @@ public class MyWorld extends World
         randomScale(banaImage);
         randomPosition(banana);
     }
-    
+        
     public void spawnGrape()
     {
         grape = new Grape();
@@ -76,7 +76,11 @@ public class MyWorld extends World
     public void randomFruits()
     {
         int amount = Greenfoot.getRandomNumber(4);
-        int randItems = Greenfoot.getRandomNumber(itemsCount-1);
+        for(int i = 0; i < amount; i++)
+        {
+            int randItems = Greenfoot.getRandomNumber(itemsCount-1);
+            spawnRandItems(randItems);
+        }
         
     }
     
