@@ -12,29 +12,55 @@ public class Elephant extends Actor
          * Act - do whatever the Elephant wants to do. This method is called whenever
          * the 'Act' or 'Run' button gets pressed in the environment.
          */
+    public static int speed = 5;
+    private int maxNum = 20;
+    private int maxBomb = 1;
+    private int bombTimer = 5000;
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();
-        if(world.timeChecks() > 500)
+        if(world.timeChecks(true, false) > 500)
         {
-            world.timerMarks();
+            //marks the timer
+            world.timerMarks(true, false);
             world.randomFruits();
+            world.spawnBomb(maxBomb, maxNum);
+            speedReduce(1, false);
+            if(bombTimer > 1000)
+            {
+                bombTimer -= 50;
+            }
+        }
+        if(world.timeChecks(false, true) > bombTimer)
+        {
+            if(maxNum > 2)
+            {
+                maxNum--;
+            }
+            if(maxBomb < 5){
+                maxBomb++;
+            }
+            world.timerMarks(false, true);
         }
         if(eat(Apple.class) || eat(Banana.class) || eat(Grape.class))
         {
-            world.randomFruits();
+            //generates a random fruits
+            world.addScores(5);
+            speed++;
         }
         else if(eat(Bomb.class))
         {
+            world.addScores(-50);
             world.gameEnd();
+            speedReduce(5, true);
         }
         if(Greenfoot.isKeyDown("a"))
         {
-            move(-5);
+            move(-(speed));
         }
         else if(Greenfoot.isKeyDown("d"))
         {
-            move(5);
+            move(speed);
         }
     }
     
@@ -45,5 +71,18 @@ public class Elephant extends Actor
             return true;
         }
         return false;
+    }
+    
+    public void speedReduce(int amount, boolean isBomb)
+    {
+        if(amount >= speed && !isBomb)
+        {
+            speed = 1;
+        }
+        else if(amount >= speed && isBomb)
+        {
+            speed = 0;
+        }
+        else{speed -= amount;}
     }
 }
