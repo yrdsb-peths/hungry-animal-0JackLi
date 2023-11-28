@@ -15,6 +15,11 @@ public class Elephant extends Actor
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();
+        if(world.timeChecks() > 500)
+        {
+            world.timerMarks();
+            world.randomFruits();
+        }
         if(eat(Apple.class) || eat(Banana.class) || eat(Grape.class))
         {
             world.randomFruits();

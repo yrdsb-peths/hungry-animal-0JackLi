@@ -19,7 +19,7 @@ public class Apple extends Actor
        {
            MyWorld world = (MyWorld) getWorld();
            world.removeObj(this);
-           world.spawnApple();
+           //world.randomFruits();
        }
     }
 }

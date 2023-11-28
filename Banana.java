@@ -19,7 +19,7 @@ public class Banana extends Actor
        {
            MyWorld world = (MyWorld) getWorld();
            world.removeObj(this);
-           world.spawnBanana();
+           //world.randomFruits();
        }
     }    
 }
