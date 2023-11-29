@@ -26,7 +26,7 @@ public class Elephant extends Actor
             world.randomFruits();
             world.spawnBomb(maxBomb, maxNum);
             speedReduce(1, false);
-            if(bombTimer > 1000)
+            if(bombTimer > 550)
             {
                 bombTimer -= 50;
             }
