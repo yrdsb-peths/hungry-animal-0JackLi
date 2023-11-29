@@ -16,6 +16,17 @@ public class Elephant extends Actor
     private int maxNum = 20;
     private int maxBomb = 1;
     private int bombTimer = 5000;
+    GreenfootImage[] idle = new GreenfootImage[8];
+    
+    public Elephant()
+    {
+        for(int i = 0; i < idle.length; i++)
+        {
+            idle[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+        }
+        setImage(idle[0]);
+    }
+    
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();
@@ -26,6 +37,7 @@ public class Elephant extends Actor
             world.randomFruits();
             world.spawnBomb(maxBomb, maxNum);
             speedReduce(1, false);
+            idleAnimation();
             if(bombTimer > 550)
             {
                 bombTimer -= 50;
@@ -64,6 +76,13 @@ public class Elephant extends Actor
         }
     }
     
+    int idleIndex = 0;
+    public void idleAnimation()
+    {
+        idleIndex = (idleIndex + 1) % idle.length;
+        setImage(idle[idleIndex]);
+    }
+    
     public boolean eat(Class<?> cls){
         if(isTouching(cls))
         {
@@ -77,7 +96,7 @@ public class Elephant extends Actor
     {
         if(amount >= speed && !isBomb)
         {
-            speed = 1;
+            speed = 5;
         }
         else if(amount >= speed && isBomb)
         {
