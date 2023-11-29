@@ -16,15 +16,22 @@ public class Elephant extends Actor
     private int maxNum = 20;
     private int maxBomb = 1;
     private int bombTimer = 5000;
-    GreenfootImage[] idle = new GreenfootImage[8];
+    GreenfootImage[] rightIdle = new GreenfootImage[8];
+    GreenfootImage[] leftIdle = new GreenfootImage[8];
+    private String direction = "right";
     
     public Elephant()
     {
-        for(int i = 0; i < idle.length; i++)
+        for(int i = 0; i < rightIdle.length; i++)
         {
-            idle[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            rightIdle[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
         }
-        setImage(idle[0]);
+        
+        for(int i = 0; i < leftIdle.length; i++){
+            leftIdle[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            leftIdle[i].mirrorHorizontally();
+        }
+        setImage(rightIdle[0]);
     }
     
     public void act()
@@ -37,7 +44,14 @@ public class Elephant extends Actor
             world.randomFruits();
             world.spawnBomb(maxBomb, maxNum);
             speedReduce(1, false);
-            idleAnimation();
+            if(direction.equals("right"))
+            {
+                idleAnimation(rightIdle);
+            }
+            else
+            {
+                idleAnimation(leftIdle);
+            }
             if(bombTimer > 550)
             {
                 bombTimer -= 50;
@@ -69,15 +83,17 @@ public class Elephant extends Actor
         if(Greenfoot.isKeyDown("a"))
         {
             move(-(speed));
+            direction = "left";
         }
         else if(Greenfoot.isKeyDown("d"))
         {
             move(speed);
+            direction = "right";
         }
     }
     
     int idleIndex = 0;
-    public void idleAnimation()
+    public void idleAnimation(GreenfootImage[] idle)
     {
         idleIndex = (idleIndex + 1) % idle.length;
         setImage(idle[idleIndex]);
