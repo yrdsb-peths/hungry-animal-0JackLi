@@ -173,7 +173,7 @@ public class MyWorld extends World
        else if(Elephant.speed <= 0)
        {
            addLabel("GameOver", 90, getWidth()/2, getHeight()/2-20);
-           addLabel("Your elephant died to thirst", 40, getWidth()/2, getHeight()/2+40);
+           addLabel("Your elephant died", 40, getWidth()/2, getHeight()/2+40);
            Greenfoot.stop();
        }
     }
