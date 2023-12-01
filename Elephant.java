@@ -18,6 +18,8 @@ public class Elephant extends Actor
     private int bombTimer = 5000;
     GreenfootImage[] rightIdle = new GreenfootImage[8];
     GreenfootImage[] leftIdle = new GreenfootImage[8];
+    GreenfootImage[] rightWalking = new GreenfootImage[8];
+    GreenfootImage[] leftWalking = new GreenfootImage[8];
     private String direction = "right";
     private SimpleTimer timer = new SimpleTimer();
 
@@ -31,6 +33,15 @@ public class Elephant extends Actor
         for(int i = 0; i < leftIdle.length; i++){
             leftIdle[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
             leftIdle[i].mirrorHorizontally();
+        }
+        for(int i = 0; i < rightWalking.length; i++)
+        {
+            rightWalking[i] = new GreenfootImage("images/elephant_walking/tile00" + i + ".png");
+        }
+        for(int i = 0; i < leftWalking.length; i++)
+        {
+            leftWalking[i] = new GreenfootImage("images/elephant_walking/tile00" + i + ".png");
+            leftWalking[i].mirrorHorizontally();
         }
         setImage(rightIdle[0]);
         timer.mark();
@@ -47,6 +58,13 @@ public class Elephant extends Actor
         {
             if(direction.equals("right"))
             {
+                idleAnimation(rightWalking);
+            }
+            else if(direction.equals("left"))
+            {
+                idleAnimation(leftWalking);
+            }
+            else if(direction.equals("rightIdle")){
                 idleAnimation(rightIdle);
             }
             else
@@ -100,6 +118,17 @@ public class Elephant extends Actor
         {
             move(speed);
             direction = "right";
+        }
+        else
+        {
+            if(direction == "left")
+            {
+                direction = "leftIdle";
+            }
+            else if(direction == "right")
+            {
+                direction = "rightIdle";
+            }
         }
     }
 
