@@ -15,7 +15,6 @@ public class MyWorld extends World
      */
     private Label scoreLabel;
     private SimpleTimer timer;
-    private SimpleTimer timer2;
     private Apple apple;
     private Banana banana;
     private Grape grape;
@@ -32,7 +31,6 @@ public class MyWorld extends World
         initializeTimer();
         
         timer.mark();
-        timer2.mark();
         Background background = new Background(); 
         Elephant elephant = new Elephant();
         addObject(background,100, 150);
@@ -44,35 +42,22 @@ public class MyWorld extends World
         addObject(scoreLabel, 480, 20);
     }
     
-    public int timeChecks(boolean first, boolean second)
+    public int timeChecks()
     {
-        if(first){
-            return timer.millisElapsed();
-        }
-        else if(second)
-        {
-            return timer2.millisElapsed();
-        }
-        return 0;
+        return timer.millisElapsed();
     }
-    public void timerMarks(boolean first, boolean second)
+    public void timerMarks()
     {
-        if(first){
-            timer.mark();
-        }
-        else if(second)
-        {
-            timer2.mark();
-        }
+        timer.mark();
     }
     public void initializeTimer()
     {
         timer = new SimpleTimer();
-        timer2 = new SimpleTimer();
     }
     public void initializeActors()
     {
-        actor = new Actor[]{apple = new Apple(), banana = new Banana(), grape = new Grape()};
+        actor = new Actor[]{apple = new Apple(), banana = new Banana(), grape = new Grape()
+            , bomb = new Bomb()};
     }
     
     public void spawnApple()
@@ -85,11 +70,7 @@ public class MyWorld extends World
     
     public void addScores(int score)
     {
-        if(-(score) > this.score)
-        {
-            this.score = 0;
-        }
-        else{this.score += score;}
+        this.score += score;
         scoreLabel.setValue(this.score);
     }
     
@@ -109,19 +90,12 @@ public class MyWorld extends World
         randomPosition(grape);
     }
     
-    public void spawnBomb(int maxBomb, int maxNum)
+    public void spawnBomb()
     {
-        int amount = Greenfoot.getRandomNumber(maxBomb);
-        int chance = Greenfoot.getRandomNumber(maxNum);
-        if(chance == 0){
-            for(int i = 0; i < amount+1; i++)
-            {
-                bomb = new Bomb();
-                GreenfootImage bombImage = bomb.getImage();
-                randomScale(bombImage);
-                randomPosition(bomb);
-            }
-        }
+        bomb = new Bomb();
+        GreenfootImage bombImage = bomb.getImage();
+        randomScale(bombImage);
+        randomPosition(bomb);
     }
     
     public void randomFruits()
@@ -135,18 +109,15 @@ public class MyWorld extends World
         
     }
     
-    
     private void spawnRandItems(int items)
     {
         initializeActors();
-        GreenfootImage image = actor[items].getImage();
-        randomScale(image);
         randomPosition(actor[items]);
     }
     
     public void randomScale(GreenfootImage img)
     {
-        int rand = Greenfoot.getRandomNumber(60);
+        int rand = Greenfoot.getRandomNumber(90);
         img.scale(rand+10, rand+10);
     }
     
@@ -164,23 +135,6 @@ public class MyWorld extends World
     
     public void gameEnd()
     {
-       if(score <= 0)
-       {
-           addLabel("Game Over", 90, getWidth()/2, getHeight()/2-20);
-           addLabel("Your score reached 0", 60, getWidth()/2+10, getHeight()/2+40);
-           Greenfoot.stop();
-       }
-       else if(Elephant.speed <= 0)
-       {
-           addLabel("GameOver", 90, getWidth()/2, getHeight()/2-20);
-           addLabel("Your elephant died", 40, getWidth()/2, getHeight()/2+40);
-           Greenfoot.stop();
-       }
-    }
-    
-    public void addLabel(String text, int fontSize, int x, int y)
-    {
-        Label label = new Label(text, fontSize);
-        addObject(label, x, y);
+       
     }
 }
