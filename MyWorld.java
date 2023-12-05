@@ -13,24 +13,26 @@ public class MyWorld extends World
      * Constructor for objects of class MyWorld.
      * 
      */
+    private final int STARTING_SCORE = 0;
     private Label scoreLabel;
+    private Label healthLabel;
     private SimpleTimer timer;
     private SimpleTimer timer2;
     private Apple apple;
     private Banana banana;
     private Grape grape;
     private Bomb bomb;
-    private int score = 0;
+    public static int score;
     private int itemsCount = 4;
     private Actor[] actor;
-    
+
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
         initializeActors();
         initializeTimer();
-        
+
         timer.mark();
         timer2.mark();
         Background background = new Background(); 
@@ -40,10 +42,18 @@ public class MyWorld extends World
         spawnApple();
         spawnBanana();
         
-        scoreLabel = new Label(score, 70);
+        score = STARTING_SCORE;
+        scoreLabel = new Label("Score: " + score, 40);
+        healthLabel = new Label("Health: " + Elephant.speed, 40);
         addObject(scoreLabel, 480, 20);
+        addObject(healthLabel, 150, 20);
     }
     
+    public void act()
+    {
+        healthLabel.setValue("Health: " + Elephant.speed);
+    }
+
     public int timeChecks(boolean first, boolean second)
     {
         if(first){
@@ -55,6 +65,7 @@ public class MyWorld extends World
         }
         return 0;
     }
+
     public void timerMarks(boolean first, boolean second)
     {
         if(first){
@@ -65,16 +76,18 @@ public class MyWorld extends World
             timer2.mark();
         }
     }
+
     public void initializeTimer()
     {
         timer = new SimpleTimer();
         timer2 = new SimpleTimer();
     }
+
     public void initializeActors()
     {
         actor = new Actor[]{apple = new Apple(), banana = new Banana(), grape = new Grape()};
     }
-    
+
     public void spawnApple()
     {
         apple = new Apple();
@@ -82,7 +95,7 @@ public class MyWorld extends World
         randomScale(appImage);
         randomPosition(apple);
     }
-    
+
     public void addScores(int score)
     {
         if(-(score) > this.score)
@@ -90,9 +103,9 @@ public class MyWorld extends World
             this.score = 0;
         }
         else{this.score += score;}
-        scoreLabel.setValue(this.score);
+        scoreLabel.setValue("Score: " + this.score);
     }
-    
+
     public void spawnBanana()
     {
         banana = new Banana();
@@ -100,7 +113,7 @@ public class MyWorld extends World
         randomScale(banaImage);
         randomPosition(banana);
     }
-        
+
     public void spawnGrape()
     {
         grape = new Grape();
@@ -108,7 +121,7 @@ public class MyWorld extends World
         randomScale(graImage);
         randomPosition(grape);
     }
-    
+
     public void spawnBomb(int maxBomb, int maxNum)
     {
         int amount = Greenfoot.getRandomNumber(maxBomb);
@@ -123,7 +136,7 @@ public class MyWorld extends World
             }
         }
     }
-    
+
     public void randomFruits()
     {
         int amount = Greenfoot.getRandomNumber(4);
@@ -132,10 +145,9 @@ public class MyWorld extends World
             int randItems = Greenfoot.getRandomNumber(itemsCount-1);
             spawnRandItems(randItems);
         }
-        
+
     }
-    
-    
+
     private void spawnRandItems(int items)
     {
         initializeActors();
@@ -143,44 +155,30 @@ public class MyWorld extends World
         randomScale(image);
         randomPosition(actor[items]);
     }
-    
+
     public void randomScale(GreenfootImage img)
     {
         int rand = Greenfoot.getRandomNumber(60);
         img.scale(rand+10, rand+10);
     }
-    
+
     public void randomPosition(Actor actor2)
     {
         int x = Greenfoot.getRandomNumber(600);
         int y = 0;
         addObject(actor2, x, y);
     }
-    
+
     public void removeObj(Actor c)
     {
         removeObject(c);
     }
-    
+
     public void gameEnd()
     {
-       if(score <= 0)
-       {
-           addLabel("Game Over", 90, getWidth()/2, getHeight()/2-20);
-           addLabel("Your score reached 0", 60, getWidth()/2+10, getHeight()/2+40);
-           Greenfoot.stop();
-       }
-       else if(Elephant.speed <= 0)
-       {
-           addLabel("GameOver", 90, getWidth()/2, getHeight()/2-20);
-           addLabel("Your elephant died", 40, getWidth()/2, getHeight()/2+40);
-           Greenfoot.stop();
-       }
-    }
-    
-    public void addLabel(String text, int fontSize, int x, int y)
-    {
-        Label label = new Label(text, fontSize);
-        addObject(label, x, y);
+        if(score <= 0 || Elephant.speed <= 0)
+        {
+            Greenfoot.setWorld(new EndingScreen());
+        }
     }
 }
