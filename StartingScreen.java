@@ -13,6 +13,7 @@ public class StartingScreen extends World
      * Constructor for objects of class StartingScreen.
      * 
      */
+    GreenfootSound intro = new GreenfootSound("sounds/Intro.mp3");
     public StartingScreen()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -21,6 +22,7 @@ public class StartingScreen extends World
         Label label2 = new Label("Click anywhere to begin", 40);
         addObject(label, getWidth()/2, getHeight()/2 - 35);
         addObject(label2, getWidth()/2, getHeight()/2+100);
+        intro.playLoop();
     }
     
     public void act()
@@ -28,6 +30,7 @@ public class StartingScreen extends World
         if(Greenfoot.mouseClicked(null))
         {
             Greenfoot.setWorld(new MyWorld());
+            intro.stop();
         }
     }
 }

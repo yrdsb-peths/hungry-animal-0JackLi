@@ -13,18 +13,23 @@ public class MyWorld extends World
      * Constructor for objects of class MyWorld.
      * 
      */
+    GreenfootSound gameMusic = new GreenfootSound("sounds/gamemusic.mp3");
     private final int STARTING_SCORE = 0;
     private Label scoreLabel;
     private Label healthLabel;
     private SimpleTimer timer;
     private SimpleTimer timer2;
+    private SimpleTimer displayTimer;
     private Apple apple;
     private Banana banana;
     private Grape grape;
     private Bomb bomb;
+    private Star star;
+    private Label achiLabel;
     public static int score;
     private int itemsCount = 4;
     private Actor[] actor;
+    private int nextPoint = 1000;
 
     public MyWorld()
     {    
@@ -44,14 +49,30 @@ public class MyWorld extends World
         
         score = STARTING_SCORE;
         scoreLabel = new Label("Score: " + score, 40);
-        healthLabel = new Label("Health: " + Elephant.speed, 40);
+        healthLabel = new Label("Health: " + Elephant.health, 40);
+        achiLabel = new Label("", 25);
+        star = new Star();
         addObject(scoreLabel, 480, 20);
         addObject(healthLabel, 150, 20);
+        gameMusic.playLoop();
     }
     
     public void act()
     {
-        healthLabel.setValue("Health: " + Elephant.speed);
+        healthLabel.setValue("Health: " + Elephant.health);
+        if(this.score >= nextPoint)
+        {
+            achiLabel.setValue(nextPoint + " points");
+            addObject(star, getWidth()/2, 70);
+            addObject(achiLabel, getWidth()/2, 110);
+            displayTimer.mark();
+            nextPoint += 500;
+        }
+        if(displayTimer.millisElapsed() >= 2000)
+        {
+            removeObj(star);
+            removeObj(achiLabel);
+        }
     }
 
     public int timeChecks(boolean first, boolean second)
@@ -81,6 +102,7 @@ public class MyWorld extends World
     {
         timer = new SimpleTimer();
         timer2 = new SimpleTimer();
+        displayTimer = new SimpleTimer();
     }
 
     public void initializeActors()
@@ -179,6 +201,7 @@ public class MyWorld extends World
         if(score <= 0 || Elephant.speed <= 0)
         {
             Greenfoot.setWorld(new EndingScreen());
+            gameMusic.stop();
         }
     }
 }

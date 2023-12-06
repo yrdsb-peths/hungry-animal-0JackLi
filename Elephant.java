@@ -13,7 +13,9 @@ public class Elephant extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     private final int STARTING_SPEED = 5;
+    private final int STARTING_HEALTH = 5;
     public static int speed;
+    public static int health;
     private int maxNum = 20;
     private int maxBomb = 1;
     private int bombTimer = 5000;
@@ -23,7 +25,7 @@ public class Elephant extends Actor
     GreenfootImage[] leftWalking = new GreenfootImage[8];
     private String direction = "right";
     private SimpleTimer timer = new SimpleTimer();
-    
+
     /** 
      * Elephant Constructor 
      * Create an elephant with all the animations
@@ -31,6 +33,7 @@ public class Elephant extends Actor
     public Elephant()
     {
         speed = STARTING_SPEED;
+        health = STARTING_HEALTH;
         for(int i = 0; i < rightIdle.length; i++)
         {
             rightIdle[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
@@ -86,8 +89,9 @@ public class Elephant extends Actor
             //addes 5 scores and increase the elephant speed
             GreenfootSound sound = new GreenfootSound("sounds/eatsound.mp3");
             sound.play();
-            world.addScores(5);
-            increaseSpeed(1);
+            world.addScores(200);
+            increaseHealth(1);
+            speedCheck();
         }
         else if(eat(Bomb.class))
         {
@@ -95,7 +99,8 @@ public class Elephant extends Actor
             GreenfootSound sound = new GreenfootSound("sounds/explosion.mp3");
             sound.play();
             world.addScores(-50);
-            reduceSpeed(5, true);
+            reduceHealth(5, true);
+            speedCheck();
             world.gameEnd();
         }
 
@@ -146,20 +151,32 @@ public class Elephant extends Actor
         }
     }
 
-    public void reduceSpeed(int amount, boolean isBomb)
+    public void reduceHealth(int amount, boolean isBomb)
     {
-        if(amount >= speed && isBomb)
+        if(amount >= health && isBomb)
         {
-            speed = 0;
+            health = 0;
         }
-        else{if(speed > 5){speed -= amount;}}
+        else{if(health > 5){health -= amount;}}
     }
     
-    private void increaseSpeed(int amount)
+    private void increaseHealth(int amount)
     {
-        if(speed + amount < 10)
+        if(health + amount < 30)
         {
-            speed += amount;
+            health += amount;
+        }
+        else
+        {
+            health = 30;
+        }
+    }
+    
+    private void speedCheck()
+    {
+        if(health <= 10)
+        {
+            speed = health;
         }
         else
         {
@@ -176,7 +193,8 @@ public class Elephant extends Actor
             world.timerMarks(true, false);
             world.randomFruits();
             world.spawnBomb(maxBomb, maxNum);
-            reduceSpeed(1, false);
+            reduceHealth(1, false);
+            speedCheck();
             if(bombTimer > 100)
             {
                 bombTimer -= 50;
