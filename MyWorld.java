@@ -20,15 +20,21 @@ public class MyWorld extends World
     private SimpleTimer timer;
     private SimpleTimer timer2;
     private SimpleTimer displayTimer;
+    private SimpleTimer dayTime;
     private Apple apple;
     private Banana banana;
     private Grape grape;
     private Bomb bomb;
     private Star star;
+    private Morning morning;
+    private Midday midday;
+    private Afternoon afternoon;
+    private Night night;
     private Label achiLabel;
     public static int score;
     private int itemsCount = 4;
     private Actor[] actor;
+    private Actor[] scene;
     private int nextPoint = 1000;
 
     public MyWorld()
@@ -40,9 +46,10 @@ public class MyWorld extends World
 
         timer.mark();
         timer2.mark();
-        Background background = new Background(); 
+        dayTime.mark();
+        morning = new Morning();
         Elephant elephant = new Elephant();
-        addObject(background,100, 150);
+        addObject(morning, 200, 195);
         addObject(elephant, 300, 300);
         spawnApple();
         spawnBanana();
@@ -57,6 +64,7 @@ public class MyWorld extends World
         gameMusic.playLoop();
     }
     
+    int nextScene = 1;
     public void act()
     {
         healthLabel.setValue("Health: " + Elephant.health);
@@ -72,6 +80,12 @@ public class MyWorld extends World
         {
             removeObj(star);
             removeObj(achiLabel);
+        }
+        if(dayTime.millisElapsed() >= 20000)
+        {
+            nextScene = (nextScene + 1) % scene.length;
+            addObject(scene[nextScene], 0, 0);
+            dayTime.mark();
         }
     }
 
@@ -103,11 +117,13 @@ public class MyWorld extends World
         timer = new SimpleTimer();
         timer2 = new SimpleTimer();
         displayTimer = new SimpleTimer();
+        dayTime = new SimpleTimer();
     }
 
     public void initializeActors()
     {
         actor = new Actor[]{apple = new Apple(), banana = new Banana(), grape = new Grape()};
+        scene = new Actor[]{morning = new Morning(), midday = new Midday(), afternoon = new Afternoon(), night = new Night()};
     }
 
     public void spawnApple()
