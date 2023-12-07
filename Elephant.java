@@ -62,7 +62,6 @@ public class Elephant extends Actor
         respawnItems();
         keyDown();
         //perform animation for every 20 milliseconds
-        //and resets the timer
         if(timer.millisElapsed() > 20)
         {
             if(direction.equals("right"))
@@ -89,7 +88,7 @@ public class Elephant extends Actor
             //addes 5 scores and increase the elephant speed
             GreenfootSound sound = new GreenfootSound("sounds/eatsound.mp3");
             sound.play();
-            world.addScores(200);
+            world.addScores(5);
             increaseHealth(1);
             speedCheck();
         }
@@ -117,6 +116,9 @@ public class Elephant extends Actor
         setImage(idle[idleIndex]);
     }
 
+    /**
+     * remove the object when touching
+     */
     public boolean eat(Class<?> cls){
         if(isTouching(cls))
         {
@@ -126,6 +128,10 @@ public class Elephant extends Actor
         return false;
     }
 
+    /**
+     * check which key is pressed and decide which way the elephant move
+     * 
+     */
     public void keyDown()
     {
         if(Greenfoot.isKeyDown("a"))
@@ -153,13 +159,20 @@ public class Elephant extends Actor
 
     public void reduceHealth(int amount, boolean isBomb)
     {
-        if(amount >= health && isBomb)
+        if(isBomb)
         {
-            health = 0;
+            if(amount > health)
+            {
+                health = 0;
+            }
+            else
+            {
+                health -= amount;
+            }
         }
-        else{if(health > 5){health -= amount;}}
+        else{if(health > 10){health -= amount;}}
     }
-    
+
     private void increaseHealth(int amount)
     {
         if(health + amount < 30)
@@ -171,7 +184,7 @@ public class Elephant extends Actor
             health = 30;
         }
     }
-    
+
     private void speedCheck()
     {
         if(health <= 10)
@@ -184,6 +197,9 @@ public class Elephant extends Actor
         }
     }
 
+    /**
+     * spawn random items on the canvas
+     */
     public void respawnItems()
     {
         MyWorld world = (MyWorld) getWorld();
@@ -206,7 +222,7 @@ public class Elephant extends Actor
             {
                 maxNum--;
             }
-            if(maxBomb < 5){
+            if(maxBomb < 8){
                 maxBomb++;
             }
             world.timerMarks(false, true);

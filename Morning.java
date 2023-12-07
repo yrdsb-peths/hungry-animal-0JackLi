@@ -15,7 +15,5 @@ public class Morning extends Actor
     public void act() 
     {
         // Add your action code here.
-        GreenfootImage morning = getImage();
-        morning.scale(900, 300);
     }    
 }

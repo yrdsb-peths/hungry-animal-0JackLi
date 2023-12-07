@@ -16,9 +16,9 @@ public class Bomb extends Actor
     {
         // Add your action code here.
        setLocation(getX(), getY()+5);
-       if(getY() >= 399)
+       MyWorld world = (MyWorld) getWorld();
+       if(getY() >= world.getHeight() - 1)
        {
-           MyWorld world = (MyWorld) getWorld();
            world.removeObj(this);
            //world.randomFruits();
        }

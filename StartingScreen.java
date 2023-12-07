@@ -24,7 +24,7 @@ public class StartingScreen extends World
         addObject(label2, getWidth()/2, getHeight()/2+100);
         intro.playLoop();
     }
-    
+
     public void act()
     {
         if(Greenfoot.mouseClicked(null))

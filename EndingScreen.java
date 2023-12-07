@@ -15,7 +15,7 @@ public class EndingScreen extends World
      */
     Label gameOverDisplay = new Label("Game Over", 90);
     GreenfootSound outro = new GreenfootSound("sounds/outro.mp3");
-    
+
     public EndingScreen()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -26,12 +26,9 @@ public class EndingScreen extends World
         addObject(gameOverDisplay, getWidth()/2, getHeight()/2-20);
         addObject(highScoreLabel, 150, 30);
         outro.playLoop();
-       
+
         if(MyWorld.score <= 0)
         {
-            /*world.addLabel("Game Over", 90, getWidth()/2, getHeight()/2-20);
-            world.addLabel("Your score reached 0", 60, getWidth()/2+10, getHeight()/2+40);
-            */
             Label scoreEnd = new Label("Your score reached 0", 40);
             addObject(scoreEnd, getWidth()/2, getHeight()/2+40);
         }
