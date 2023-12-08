@@ -15,11 +15,12 @@ public class Grape extends Actor
     public void act() 
     {
         // Add your action code here.
-       setLocation(getX(), getY()+5);
-       MyWorld world = (MyWorld) getWorld();
-       if(getY() >= world.getHeight()-1)
-       {
-           world.removeObj(this);
-       }
+        GreenfootImage image = getImage();
+        setLocation(getX(), getY()+5);
+        MyWorld world = (MyWorld) getWorld();
+        if(getY() >= world.getHeight() - image.getHeight())
+        {
+            world.removeObj(this);
+        }
     }    
 }
