@@ -23,6 +23,7 @@ public class StartingScreen extends World
         addObject(label, getWidth()/2, getHeight()/2 - 35);
         addObject(label2, getWidth()/2, getHeight()/2+100);
         intro.playLoop();
+        prepare();
     }
 
     public void act()
@@ -32,5 +33,23 @@ public class StartingScreen extends World
             Greenfoot.setWorld(new MyWorld());
             intro.stop();
         }
+    }
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
+        Label label = new Label("Press a to move left b to move right", 30);
+        addObject(label,238,45);
+        label.setLocation(300,52);
     }
 }

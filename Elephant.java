@@ -25,6 +25,7 @@ public class Elephant extends Actor
     GreenfootImage[] leftWalking = new GreenfootImage[8];
     private String direction = "right";
     private SimpleTimer timer = new SimpleTimer();
+    private SimpleTimer healthTimer = new SimpleTimer();
 
     /** 
      * Elephant Constructor 
@@ -80,6 +81,12 @@ public class Elephant extends Actor
                 idleAnimation(leftIdle);
             }
             timer.mark();
+        }
+
+        if(healthTimer.millisElapsed() >= 800)
+        {
+            reduceHealth(1, false);
+            healthTimer.mark();
         }
 
         //eats the items
@@ -170,7 +177,7 @@ public class Elephant extends Actor
                 health -= amount;
             }
         }
-        else{if(health > 10){health -= amount;}}
+        else{if(health > 5){health -= amount;}}
     }
 
     private void increaseHealth(int amount)
@@ -209,7 +216,6 @@ public class Elephant extends Actor
             world.timerMarks(true, false);
             world.randomFruits();
             world.spawnBomb(maxBomb, maxNum);
-            reduceHealth(1, false);
             speedCheck();
             if(bombTimer > 100)
             {

@@ -34,7 +34,7 @@ public class MyWorld extends World
     private Actor[] actor;
     private Actor[] scene;
     private GreenfootImage[] background = new GreenfootImage[4];
-    private int nextPoint = 1000;
+    private int nextPoint = 100;
     private int spawnCount = 1;
 
     public MyWorld()
@@ -78,7 +78,7 @@ public class MyWorld extends World
             addObject(star, getWidth()/2, 70);
             addObject(achiLabel, getWidth()/2, 110);
             timer[2].mark();
-            nextPoint += 500;
+            nextPoint += 100;
         }
         if(timer[2].millisElapsed() >= 2000)
         {
