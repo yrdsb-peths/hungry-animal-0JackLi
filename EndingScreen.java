@@ -15,13 +15,17 @@ public class EndingScreen extends World
      */
     Label gameOverDisplay = new Label("Game Over", 90);
     GreenfootSound outro = new GreenfootSound("sounds/outro.mp3");
-
+    EndingBackground background = new EndingBackground();
+    GreenfootImage backImage = background.getImage();
     public EndingScreen()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         Label label = new Label("Click anywhere to restart", 40);
         Label highScoreLabel = new Label("Final Score: " + MyWorld.score, 40);
+        backImage.scale(600, 400);
+        setBackground(backImage);
+
         addObject(label, getWidth()/2, getHeight()/2+100); 
         addObject(gameOverDisplay, getWidth()/2, getHeight()/2-20);
         addObject(highScoreLabel, 150, 30);
