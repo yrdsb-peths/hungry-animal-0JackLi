@@ -152,7 +152,7 @@ public class MyWorld extends World
         else{this.score += score;}
         scoreLabel.setValue("Score: " + this.score);
     }
-    
+
     /**
      * create and display apple actor on canvas
      */
@@ -217,7 +217,7 @@ public class MyWorld extends World
         }
 
     }
-    
+
     /**
      * turn the specific actor to a GreenfootImage
      */

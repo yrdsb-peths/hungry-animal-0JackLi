@@ -16,7 +16,7 @@ public class StartingScreen extends World
     GreenfootSound intro = new GreenfootSound("sounds/Intro.mp3");
     StartingBackground background = new StartingBackground();
     GreenfootImage backImage = background.getImage();
-    
+
     public StartingScreen()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
